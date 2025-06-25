@@ -38,40 +38,41 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.btnRasterization = new System.Windows.Forms.Button();
             this.panel9 = new System.Windows.Forms.Panel();
-            this.button8 = new System.Windows.Forms.Button();
+            this.btnDDA = new System.Windows.Forms.Button();
             this.panel14 = new System.Windows.Forms.Panel();
-            this.button13 = new System.Windows.Forms.Button();
+            this.btnBresenhamLines = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnBresenhamCircunference = new System.Windows.Forms.Button();
             this.panel15 = new System.Windows.Forms.Panel();
-            this.button14 = new System.Windows.Forms.Button();
+            this.btnBresenhamEllipse = new System.Windows.Forms.Button();
             this.parametricContainer = new System.Windows.Forms.FlowLayoutPanel();
             this.panel8 = new System.Windows.Forms.Panel();
             this.btnParametric = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
-            this.button6 = new System.Windows.Forms.Button();
+            this.btnBeizerCurves = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.button5 = new System.Windows.Forms.Button();
+            this.btnBSplinesCurves = new System.Windows.Forms.Button();
             this.clippingContainer = new System.Windows.Forms.FlowLayoutPanel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.btnClipping = new System.Windows.Forms.Button();
             this.panel10 = new System.Windows.Forms.Panel();
-            this.button9 = new System.Windows.Forms.Button();
+            this.btnCohenSutherland = new System.Windows.Forms.Button();
             this.panel11 = new System.Windows.Forms.Panel();
-            this.button10 = new System.Windows.Forms.Button();
+            this.btnSutherlandHodgman = new System.Windows.Forms.Button();
             this.regionFillContainer = new System.Windows.Forms.FlowLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnRegionFill = new System.Windows.Forms.Button();
             this.panel12 = new System.Windows.Forms.Panel();
-            this.button11 = new System.Windows.Forms.Button();
+            this.btnFloodFill = new System.Windows.Forms.Button();
             this.panel13 = new System.Windows.Forms.Panel();
-            this.button12 = new System.Windows.Forms.Button();
+            this.btnIncrementalFill = new System.Windows.Forms.Button();
             this.rasterizationTransition = new System.Windows.Forms.Timer(this.components);
             this.parametricTimer = new System.Windows.Forms.Timer(this.components);
             this.regionTimer = new System.Windows.Forms.Timer(this.components);
             this.clippingTimer = new System.Windows.Forms.Timer(this.components);
             this.sideBarTimer = new System.Windows.Forms.Timer(this.components);
             this.picCanvas = new System.Windows.Forms.PictureBox();
+            this.bigLabel1 = new ReaLTaiizor.Controls.BigLabel();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnHamburger)).BeginInit();
             this.sideBarContainer.SuspendLayout();
@@ -99,6 +100,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.panel1.Controls.Add(this.bigLabel1);
             this.panel1.Controls.Add(this.nightControlBox1);
             this.panel1.Controls.Add(this.btnHamburger);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -198,99 +200,103 @@
             // 
             // panel9
             // 
-            this.panel9.Controls.Add(this.button8);
+            this.panel9.Controls.Add(this.btnDDA);
             this.panel9.Location = new System.Drawing.Point(3, 70);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(293, 61);
             this.panel9.TabIndex = 7;
             // 
-            // button8
+            // btnDDA
             // 
-            this.button8.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button8.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button8.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.button8.Image = ((System.Drawing.Image)(resources.GetObject("button8.Image")));
-            this.button8.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button8.Location = new System.Drawing.Point(-9, -38);
-            this.button8.Name = "button8";
-            this.button8.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
-            this.button8.Size = new System.Drawing.Size(342, 134);
-            this.button8.TabIndex = 2;
-            this.button8.Text = "              DDA";
-            this.button8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button8.UseVisualStyleBackColor = false;
+            this.btnDDA.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnDDA.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDDA.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnDDA.Image = ((System.Drawing.Image)(resources.GetObject("btnDDA.Image")));
+            this.btnDDA.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDDA.Location = new System.Drawing.Point(-9, -38);
+            this.btnDDA.Name = "btnDDA";
+            this.btnDDA.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.btnDDA.Size = new System.Drawing.Size(342, 134);
+            this.btnDDA.TabIndex = 2;
+            this.btnDDA.Text = "              DDA";
+            this.btnDDA.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnDDA.UseVisualStyleBackColor = false;
+            this.btnDDA.Click += new System.EventHandler(this.btnDDA_Click);
             // 
             // panel14
             // 
-            this.panel14.Controls.Add(this.button13);
+            this.panel14.Controls.Add(this.btnBresenhamLines);
             this.panel14.Location = new System.Drawing.Point(3, 137);
             this.panel14.Name = "panel14";
             this.panel14.Size = new System.Drawing.Size(293, 61);
             this.panel14.TabIndex = 6;
             // 
-            // button13
+            // btnBresenhamLines
             // 
-            this.button13.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button13.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button13.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.button13.Image = ((System.Drawing.Image)(resources.GetObject("button13.Image")));
-            this.button13.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button13.Location = new System.Drawing.Point(-9, -38);
-            this.button13.Name = "button13";
-            this.button13.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
-            this.button13.Size = new System.Drawing.Size(342, 134);
-            this.button13.TabIndex = 2;
-            this.button13.Text = "              Bresenham                         Lines";
-            this.button13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button13.UseVisualStyleBackColor = false;
+            this.btnBresenhamLines.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnBresenhamLines.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBresenhamLines.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnBresenhamLines.Image = ((System.Drawing.Image)(resources.GetObject("btnBresenhamLines.Image")));
+            this.btnBresenhamLines.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnBresenhamLines.Location = new System.Drawing.Point(-9, -38);
+            this.btnBresenhamLines.Name = "btnBresenhamLines";
+            this.btnBresenhamLines.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.btnBresenhamLines.Size = new System.Drawing.Size(342, 134);
+            this.btnBresenhamLines.TabIndex = 2;
+            this.btnBresenhamLines.Text = "              Bresenham                           Lines";
+            this.btnBresenhamLines.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnBresenhamLines.UseVisualStyleBackColor = false;
+            this.btnBresenhamLines.Click += new System.EventHandler(this.btnBresenhamLines_Click);
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.button2);
+            this.panel2.Controls.Add(this.btnBresenhamCircunference);
             this.panel2.Location = new System.Drawing.Point(3, 204);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(293, 61);
             this.panel2.TabIndex = 7;
             // 
-            // button2
+            // btnBresenhamCircunference
             // 
-            this.button2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
-            this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button2.Location = new System.Drawing.Point(-9, -38);
-            this.button2.Name = "button2";
-            this.button2.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
-            this.button2.Size = new System.Drawing.Size(342, 134);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "              Bresenham                         Circuference";
-            this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button2.UseVisualStyleBackColor = false;
+            this.btnBresenhamCircunference.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnBresenhamCircunference.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBresenhamCircunference.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnBresenhamCircunference.Image = ((System.Drawing.Image)(resources.GetObject("btnBresenhamCircunference.Image")));
+            this.btnBresenhamCircunference.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnBresenhamCircunference.Location = new System.Drawing.Point(-9, -38);
+            this.btnBresenhamCircunference.Name = "btnBresenhamCircunference";
+            this.btnBresenhamCircunference.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.btnBresenhamCircunference.Size = new System.Drawing.Size(342, 134);
+            this.btnBresenhamCircunference.TabIndex = 2;
+            this.btnBresenhamCircunference.Text = "              Bresenham                           Circuference";
+            this.btnBresenhamCircunference.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnBresenhamCircunference.UseVisualStyleBackColor = false;
+            this.btnBresenhamCircunference.Click += new System.EventHandler(this.btnBresenhamCircunference_Click);
             // 
             // panel15
             // 
-            this.panel15.Controls.Add(this.button14);
+            this.panel15.Controls.Add(this.btnBresenhamEllipse);
             this.panel15.Location = new System.Drawing.Point(3, 271);
             this.panel15.Name = "panel15";
             this.panel15.Size = new System.Drawing.Size(293, 61);
             this.panel15.TabIndex = 8;
             // 
-            // button14
+            // btnBresenhamEllipse
             // 
-            this.button14.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button14.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button14.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.button14.Image = ((System.Drawing.Image)(resources.GetObject("button14.Image")));
-            this.button14.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button14.Location = new System.Drawing.Point(-9, -38);
-            this.button14.Name = "button14";
-            this.button14.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
-            this.button14.Size = new System.Drawing.Size(342, 134);
-            this.button14.TabIndex = 2;
-            this.button14.Text = "              Bresenham                         Ellipse";
-            this.button14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button14.UseVisualStyleBackColor = false;
+            this.btnBresenhamEllipse.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnBresenhamEllipse.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBresenhamEllipse.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnBresenhamEllipse.Image = ((System.Drawing.Image)(resources.GetObject("btnBresenhamEllipse.Image")));
+            this.btnBresenhamEllipse.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnBresenhamEllipse.Location = new System.Drawing.Point(-9, -38);
+            this.btnBresenhamEllipse.Name = "btnBresenhamEllipse";
+            this.btnBresenhamEllipse.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.btnBresenhamEllipse.Size = new System.Drawing.Size(342, 134);
+            this.btnBresenhamEllipse.TabIndex = 2;
+            this.btnBresenhamEllipse.Text = "              Bresenham                           Ellipse";
+            this.btnBresenhamEllipse.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnBresenhamEllipse.UseVisualStyleBackColor = false;
+            this.btnBresenhamEllipse.Click += new System.EventHandler(this.btnBresenhamEllipse_Click);
             // 
             // parametricContainer
             // 
@@ -332,53 +338,55 @@
             // 
             // panel7
             // 
-            this.panel7.Controls.Add(this.button6);
+            this.panel7.Controls.Add(this.btnBeizerCurves);
             this.panel7.Location = new System.Drawing.Point(3, 70);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(327, 61);
             this.panel7.TabIndex = 7;
             // 
-            // button6
+            // btnBeizerCurves
             // 
-            this.button6.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button6.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button6.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.button6.Image = ((System.Drawing.Image)(resources.GetObject("button6.Image")));
-            this.button6.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button6.Location = new System.Drawing.Point(-9, -38);
-            this.button6.Margin = new System.Windows.Forms.Padding(0);
-            this.button6.Name = "button6";
-            this.button6.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
-            this.button6.Size = new System.Drawing.Size(347, 134);
-            this.button6.TabIndex = 2;
-            this.button6.Text = "              Beizer Curves";
-            this.button6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button6.UseVisualStyleBackColor = false;
+            this.btnBeizerCurves.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnBeizerCurves.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBeizerCurves.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnBeizerCurves.Image = ((System.Drawing.Image)(resources.GetObject("btnBeizerCurves.Image")));
+            this.btnBeizerCurves.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnBeizerCurves.Location = new System.Drawing.Point(-9, -38);
+            this.btnBeizerCurves.Margin = new System.Windows.Forms.Padding(0);
+            this.btnBeizerCurves.Name = "btnBeizerCurves";
+            this.btnBeizerCurves.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.btnBeizerCurves.Size = new System.Drawing.Size(347, 134);
+            this.btnBeizerCurves.TabIndex = 2;
+            this.btnBeizerCurves.Text = "              Beizer Curves";
+            this.btnBeizerCurves.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnBeizerCurves.UseVisualStyleBackColor = false;
+            this.btnBeizerCurves.Click += new System.EventHandler(this.btnBeizerCurves_Click);
             // 
             // panel6
             // 
-            this.panel6.Controls.Add(this.button5);
+            this.panel6.Controls.Add(this.btnBSplinesCurves);
             this.panel6.Location = new System.Drawing.Point(3, 137);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(327, 61);
             this.panel6.TabIndex = 6;
             // 
-            // button5
+            // btnBSplinesCurves
             // 
-            this.button5.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.button5.Image = ((System.Drawing.Image)(resources.GetObject("button5.Image")));
-            this.button5.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button5.Location = new System.Drawing.Point(-9, -38);
-            this.button5.Margin = new System.Windows.Forms.Padding(0);
-            this.button5.Name = "button5";
-            this.button5.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
-            this.button5.Size = new System.Drawing.Size(347, 134);
-            this.button5.TabIndex = 2;
-            this.button5.Text = "              B-Splines                            Curves";
-            this.button5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button5.UseVisualStyleBackColor = false;
+            this.btnBSplinesCurves.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnBSplinesCurves.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBSplinesCurves.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnBSplinesCurves.Image = ((System.Drawing.Image)(resources.GetObject("btnBSplinesCurves.Image")));
+            this.btnBSplinesCurves.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnBSplinesCurves.Location = new System.Drawing.Point(-9, -38);
+            this.btnBSplinesCurves.Margin = new System.Windows.Forms.Padding(0);
+            this.btnBSplinesCurves.Name = "btnBSplinesCurves";
+            this.btnBSplinesCurves.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.btnBSplinesCurves.Size = new System.Drawing.Size(347, 134);
+            this.btnBSplinesCurves.TabIndex = 2;
+            this.btnBSplinesCurves.Text = "              B-Splines                              Curves";
+            this.btnBSplinesCurves.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnBSplinesCurves.UseVisualStyleBackColor = false;
+            this.btnBSplinesCurves.Click += new System.EventHandler(this.btnBSplinesCurves_Click);
             // 
             // clippingContainer
             // 
@@ -420,51 +428,53 @@
             // 
             // panel10
             // 
-            this.panel10.Controls.Add(this.button9);
+            this.panel10.Controls.Add(this.btnCohenSutherland);
             this.panel10.Location = new System.Drawing.Point(3, 70);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(327, 61);
             this.panel10.TabIndex = 7;
             // 
-            // button9
+            // btnCohenSutherland
             // 
-            this.button9.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button9.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button9.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.button9.Image = ((System.Drawing.Image)(resources.GetObject("button9.Image")));
-            this.button9.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button9.Location = new System.Drawing.Point(-9, -38);
-            this.button9.Name = "button9";
-            this.button9.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
-            this.button9.Size = new System.Drawing.Size(345, 134);
-            this.button9.TabIndex = 2;
-            this.button9.Text = "                Cohen-                               Sutherland";
-            this.button9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button9.UseVisualStyleBackColor = false;
+            this.btnCohenSutherland.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnCohenSutherland.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCohenSutherland.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnCohenSutherland.Image = ((System.Drawing.Image)(resources.GetObject("btnCohenSutherland.Image")));
+            this.btnCohenSutherland.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCohenSutherland.Location = new System.Drawing.Point(-9, -38);
+            this.btnCohenSutherland.Name = "btnCohenSutherland";
+            this.btnCohenSutherland.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.btnCohenSutherland.Size = new System.Drawing.Size(345, 134);
+            this.btnCohenSutherland.TabIndex = 2;
+            this.btnCohenSutherland.Text = "                Cohen-                                 Sutherland";
+            this.btnCohenSutherland.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCohenSutherland.UseVisualStyleBackColor = false;
+            this.btnCohenSutherland.Click += new System.EventHandler(this.btnCohenSutherland_Click);
             // 
             // panel11
             // 
-            this.panel11.Controls.Add(this.button10);
+            this.panel11.Controls.Add(this.btnSutherlandHodgman);
             this.panel11.Location = new System.Drawing.Point(3, 137);
             this.panel11.Name = "panel11";
             this.panel11.Size = new System.Drawing.Size(327, 61);
             this.panel11.TabIndex = 6;
             // 
-            // button10
+            // btnSutherlandHodgman
             // 
-            this.button10.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button10.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button10.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.button10.Image = ((System.Drawing.Image)(resources.GetObject("button10.Image")));
-            this.button10.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button10.Location = new System.Drawing.Point(-9, -38);
-            this.button10.Name = "button10";
-            this.button10.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
-            this.button10.Size = new System.Drawing.Size(345, 134);
-            this.button10.TabIndex = 2;
-            this.button10.Text = "                Sutherland-                        Hodgman";
-            this.button10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button10.UseVisualStyleBackColor = false;
+            this.btnSutherlandHodgman.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnSutherlandHodgman.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSutherlandHodgman.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnSutherlandHodgman.Image = ((System.Drawing.Image)(resources.GetObject("btnSutherlandHodgman.Image")));
+            this.btnSutherlandHodgman.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSutherlandHodgman.Location = new System.Drawing.Point(-9, -38);
+            this.btnSutherlandHodgman.Name = "btnSutherlandHodgman";
+            this.btnSutherlandHodgman.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.btnSutherlandHodgman.Size = new System.Drawing.Size(345, 134);
+            this.btnSutherlandHodgman.TabIndex = 2;
+            this.btnSutherlandHodgman.Text = "                Sutherland-                          Hodgman";
+            this.btnSutherlandHodgman.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSutherlandHodgman.UseVisualStyleBackColor = false;
+            this.btnSutherlandHodgman.Click += new System.EventHandler(this.btnSutherlandHodgman_Click);
             // 
             // regionFillContainer
             // 
@@ -506,51 +516,53 @@
             // 
             // panel12
             // 
-            this.panel12.Controls.Add(this.button11);
+            this.panel12.Controls.Add(this.btnFloodFill);
             this.panel12.Location = new System.Drawing.Point(3, 70);
             this.panel12.Name = "panel12";
             this.panel12.Size = new System.Drawing.Size(327, 61);
             this.panel12.TabIndex = 7;
             // 
-            // button11
+            // btnFloodFill
             // 
-            this.button11.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button11.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button11.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.button11.Image = ((System.Drawing.Image)(resources.GetObject("button11.Image")));
-            this.button11.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button11.Location = new System.Drawing.Point(-9, -38);
-            this.button11.Name = "button11";
-            this.button11.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
-            this.button11.Size = new System.Drawing.Size(347, 134);
-            this.button11.TabIndex = 2;
-            this.button11.Text = "              Flood Fill";
-            this.button11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button11.UseVisualStyleBackColor = false;
+            this.btnFloodFill.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnFloodFill.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFloodFill.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnFloodFill.Image = ((System.Drawing.Image)(resources.GetObject("btnFloodFill.Image")));
+            this.btnFloodFill.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnFloodFill.Location = new System.Drawing.Point(-9, -38);
+            this.btnFloodFill.Name = "btnFloodFill";
+            this.btnFloodFill.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.btnFloodFill.Size = new System.Drawing.Size(347, 134);
+            this.btnFloodFill.TabIndex = 2;
+            this.btnFloodFill.Text = "              Flood Fill";
+            this.btnFloodFill.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnFloodFill.UseVisualStyleBackColor = false;
+            this.btnFloodFill.Click += new System.EventHandler(this.btnFloodFill_Click);
             // 
             // panel13
             // 
-            this.panel13.Controls.Add(this.button12);
+            this.panel13.Controls.Add(this.btnIncrementalFill);
             this.panel13.Location = new System.Drawing.Point(3, 137);
             this.panel13.Name = "panel13";
             this.panel13.Size = new System.Drawing.Size(327, 61);
             this.panel13.TabIndex = 6;
             // 
-            // button12
+            // btnIncrementalFill
             // 
-            this.button12.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button12.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button12.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.button12.Image = ((System.Drawing.Image)(resources.GetObject("button12.Image")));
-            this.button12.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button12.Location = new System.Drawing.Point(-9, -38);
-            this.button12.Name = "button12";
-            this.button12.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
-            this.button12.Size = new System.Drawing.Size(347, 134);
-            this.button12.TabIndex = 2;
-            this.button12.Text = "              Incremental                         Fill";
-            this.button12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button12.UseVisualStyleBackColor = false;
+            this.btnIncrementalFill.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnIncrementalFill.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnIncrementalFill.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnIncrementalFill.Image = ((System.Drawing.Image)(resources.GetObject("btnIncrementalFill.Image")));
+            this.btnIncrementalFill.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnIncrementalFill.Location = new System.Drawing.Point(-9, -38);
+            this.btnIncrementalFill.Name = "btnIncrementalFill";
+            this.btnIncrementalFill.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.btnIncrementalFill.Size = new System.Drawing.Size(347, 134);
+            this.btnIncrementalFill.TabIndex = 2;
+            this.btnIncrementalFill.Text = "              Incremental                         Fill";
+            this.btnIncrementalFill.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnIncrementalFill.UseVisualStyleBackColor = false;
+            this.btnIncrementalFill.Click += new System.EventHandler(this.btnIncrementalFill_Click);
             // 
             // rasterizationTransition
             // 
@@ -585,6 +597,19 @@
             this.picCanvas.Size = new System.Drawing.Size(969, 717);
             this.picCanvas.TabIndex = 2;
             this.picCanvas.TabStop = false;
+            this.picCanvas.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picCanvas_MouseClick);
+            // 
+            // bigLabel1
+            // 
+            this.bigLabel1.AutoSize = true;
+            this.bigLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.bigLabel1.Font = new System.Drawing.Font("Segoe UI", 25F);
+            this.bigLabel1.ForeColor = System.Drawing.Color.White;
+            this.bigLabel1.Location = new System.Drawing.Point(85, 12);
+            this.bigLabel1.Name = "bigLabel1";
+            this.bigLabel1.Size = new System.Drawing.Size(451, 67);
+            this.bigLabel1.TabIndex = 3;
+            this.bigLabel1.Text = "Graphic Algorithms";
             // 
             // Main
             // 
@@ -637,38 +662,39 @@
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Button btnParametric;
         private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button btnBeizerCurves;
         private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btnBSplinesCurves;
         private System.Windows.Forms.FlowLayoutPanel clippingContainer;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Button btnClipping;
         private System.Windows.Forms.Panel panel10;
-        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Button btnCohenSutherland;
         private System.Windows.Forms.Panel panel11;
-        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Button btnSutherlandHodgman;
         private System.Windows.Forms.FlowLayoutPanel regionFillContainer;
         private System.Windows.Forms.Panel panel12;
-        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Button btnFloodFill;
         private System.Windows.Forms.Panel panel13;
-        private System.Windows.Forms.Button button12;
+        private System.Windows.Forms.Button btnIncrementalFill;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button btnRegionFill;
         private System.Windows.Forms.FlowLayoutPanel rasterizationContainer;
         private System.Windows.Forms.Panel panel9;
-        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button btnDDA;
         private System.Windows.Forms.Panel panel14;
-        private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.Button btnBresenhamLines;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnBresenhamCircunference;
         private System.Windows.Forms.Panel panel15;
-        private System.Windows.Forms.Button button14;
+        private System.Windows.Forms.Button btnBresenhamEllipse;
         private System.Windows.Forms.Timer rasterizationTransition;
         private System.Windows.Forms.Timer parametricTimer;
         private System.Windows.Forms.Timer regionTimer;
         private System.Windows.Forms.Timer clippingTimer;
         private System.Windows.Forms.Timer sideBarTimer;
         private System.Windows.Forms.PictureBox picCanvas;
+        private ReaLTaiizor.Controls.BigLabel bigLabel1;
     }
 }
 

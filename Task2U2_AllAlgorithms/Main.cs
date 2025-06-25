@@ -7,18 +7,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Task2U2_AllAlgorithms.src.components;
 
 namespace Task2U2_AllAlgorithms
 {
     public partial class Main : Form
     {
+        private Polygon polygon;
+        private List<PointF> linePoints = new List<PointF>();
+        private List<PointF> canvasPoints = new List<PointF>();
+        private PointF[] clippedPoints;
+        private Pen pen;
         public Main()
         {
             InitializeComponent();
             picCanvasCopy = new Bitmap(picCanvas.Width, picCanvas.Height);
             picCanvas.Image = picCanvasCopy;
             picCanvas.SizeChanged += picCanvas_SizeChanged;
-
+            picCanvas.Paint += picCanvas_Paint;
+            pen = new Pen(Color.Black, 1);
         }
 
         bool rasterizationMenuExpand = false;
@@ -27,9 +34,16 @@ namespace Task2U2_AllAlgorithms
         bool clippingMenuExpand = false;
         bool sideBarExpand = true;
         Bitmap picCanvasCopy;
-        
-        
 
+        private PointF getCenter()
+        {
+            PointF center = new PointF(
+                picCanvas.Width / 2,
+                picCanvas.Height / 2
+                );
+            return center;
+
+        }
         private void picCanvas_SizeChanged(object sender, EventArgs e)
         {
             if (picCanvas.Width > 0 && picCanvas.Height > 0)
@@ -191,5 +205,108 @@ namespace Task2U2_AllAlgorithms
             }
         }
 
+        private void picCanvas_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+
+                linePoints.Add(new PointF(e.X, e.Y));
+                picCanvas.Invalidate();
+            }
+        }
+
+        private void drawInitArea()
+        {
+            polygon = new Polygon(4, 100, getCenter());
+            //polygon.SetCenter(getCenter());
+            polygon.SetRotation(polygon.GetRad() / 2);
+            canvasPoints = new List<PointF>(polygon.GetOutline());
+            picCanvas.Invalidate();
+        }
+
+        private void picCanvas_Paint(object sender, PaintEventArgs e)
+        {
+            if (polygon != null)
+            {
+                PointF[] points = polygon.GetOutline();
+
+                using (Pen localPen = new Pen(Color.Black, 2))
+                {
+                    e.Graphics.DrawPolygon(localPen, points);
+                }
+                // e.Graphics.DrawEllipse(new Pen(Color.Orange, 2), points[0].X, points[0].Y, 2, 2);
+            }
+            if (linePoints.Count > 2)
+            {
+                //for (int i = 0; i < linePoints.Count; i += 2)
+                //{
+                //    e.Graphics.DrawLine(pen, linePoints[i], linePoints[i + 1]);
+                //}
+
+                e.Graphics.DrawPolygon(pen, linePoints.ToArray());
+
+            }
+
+            if (clippedPoints != null && clippedPoints.Length > 2)
+            {
+                for (int i = 0; i < clippedPoints.Length; i += 2)
+                {
+                    e.Graphics.DrawEllipse(new Pen(Color.Blue, 2), clippedPoints[i].X, clippedPoints[i].Y, 2, 2);
+                    e.Graphics.DrawEllipse(new Pen(Color.Orange, 2), clippedPoints[i + 1].X, clippedPoints[i + 1].Y, 2, 2);
+                    e.Graphics.DrawLine(new Pen(Color.Red), clippedPoints[i], clippedPoints[i + 1]);
+                }
+                //e.Graphics.DrawPolygon(new Pen(Color.Red), clippedPoints);
+            }
+        }
+
+        private void btnDDA_Click(object sender, EventArgs e)
+        {
+            drawInitArea();
+        }
+
+        private void btnBresenhamLines_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnBresenhamCircunference_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnBresenhamEllipse_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnBeizerCurves_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnBSplinesCurves_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnFloodFill_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnIncrementalFill_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCohenSutherland_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSutherlandHodgman_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
