@@ -59,6 +59,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\components\Animations\CanvasAnimator.cs" />
     <Compile Include="src\components\clipping\Cohen_Sutherland_Algorithm.cs" />
     <Compile Include="src\components\clipping\Sutherland_Hodgman_Algorithm.cs" />
     <Compile Include="src\components\parametricCurves\Bezier_Algorithm.cs" />
@@ -98,7 +99,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\assets\" />
-    <Folder Include="src\components\Animations\" />
     <Folder Include="src\views\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

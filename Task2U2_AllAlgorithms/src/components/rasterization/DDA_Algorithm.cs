@@ -28,7 +28,6 @@ namespace Task2U2_AllAlgorithms.src.components
 
             int iter = (Math.Abs(deltaX) > Math.Abs(deltaY)) ? Math.Abs(deltaX) : Math.Abs(deltaY);
 
-
             double pendiente = (deltaX != 0) ? (double)deltaY / deltaX : 0;
 
             points.Add(new Point(this.pointInit.X, this.pointInit.Y));
@@ -64,9 +63,9 @@ namespace Task2U2_AllAlgorithms.src.components
                     yk = aux + pendiente * xStep;
                     aux = yk;
                     Point point = new Point();
+                    point.Y = (int)Math.Round(yk);
                     point.X = xk + xStep;
                     xk = point.X;
-                    point.Y = (int)Math.Round(yk);
 
                     points.Add(point);
                 }

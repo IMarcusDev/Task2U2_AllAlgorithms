@@ -47,7 +47,7 @@ namespace Task2U2_AllAlgorithms.src.components.regionsFill
             RecursiveFill(canvas, x, y - 1, targetColor, fillColor, visited, result, depth + 1, maxDepth);
             RecursiveFill(canvas, x - 1, y, targetColor, fillColor, visited, result, depth + 1, maxDepth);
         }
-
+    
         public static Point[] Iterative_Parallel_Flood_Fill(Bitmap canvas, int x, int y, Color color)
         {
             int width = canvas.Width;

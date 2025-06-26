@@ -8,16 +8,32 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Task2U2_AllAlgorithms.src.components;
+using Task2U2_AllAlgorithms.src.components.Animations;
+using Task2U2_AllAlgorithms.src.components.regionsFill;
 
 namespace Task2U2_AllAlgorithms
 {
     public partial class Main : Form
     {
         private Polygon polygon;
+        private DDA_Algorithm dda_lines;
+        private Bresenham_Lines_Algorithm bresenham_lines;
+
         private List<PointF> linePoints = new List<PointF>();
         private List<PointF> canvasPoints = new List<PointF>();
         private PointF[] clippedPoints;
+        List<Color> colors = new List<Color> { Color.Violet, Color.Red, Color.Purple, Color.Green, Color.DarkGreen, Color.DarkOrange, Color.Orange, Color.Peru, Color.Pink, Color.Tan };
         private Pen pen;
+        private CanvasAnimator animator;
+
+        private Dictionary<string, bool> dictionaryAlgorithms = new Dictionary<string, bool>();
+
+        bool rasterizationMenuExpand = false;
+        bool parametricMenuExpand = false;
+        bool regionFillMenuExpand = false;
+        bool clippingMenuExpand = false;
+        bool sideBarExpand = true;
+        Bitmap picCanvasCopy;
         public Main()
         {
             InitializeComponent();
@@ -26,15 +42,19 @@ namespace Task2U2_AllAlgorithms
             picCanvas.SizeChanged += picCanvas_SizeChanged;
             picCanvas.Paint += picCanvas_Paint;
             pen = new Pen(Color.Black, 1);
+            animator = new CanvasAnimator(picCanvas, picCanvasCopy, colors);
+
+            dictionaryAlgorithms.Add("dda_enabled", false);
+            dictionaryAlgorithms.Add("bresenham_lines_enabled", false);
+            dictionaryAlgorithms.Add("bresenham_circunferencce_enabled", false);
+            dictionaryAlgorithms.Add("bresenham_ellipse_enabled", false);
+            dictionaryAlgorithms.Add("floodFill_enable", false);
+            dictionaryAlgorithms.Add("incrementalFill", false);
+            dictionaryAlgorithms.Add("cohen_sutherland", false);
+            dictionaryAlgorithms.Add("sutherland_hodgman", false);
+            dictionaryAlgorithms.Add("beizer_enable", false);
+            dictionaryAlgorithms.Add("bSplines_enabled", false);
         }
-
-        bool rasterizationMenuExpand = false;
-        bool parametricMenuExpand = false;
-        bool regionFillMenuExpand = false;
-        bool clippingMenuExpand = false;
-        bool sideBarExpand = true;
-        Bitmap picCanvasCopy;
-
         private PointF getCenter()
         {
             PointF center = new PointF(
@@ -43,6 +63,12 @@ namespace Task2U2_AllAlgorithms
                 );
             return center;
 
+        }
+
+        private void enableSelectedAlgorithm(string algorithm, bool value = true)
+        {
+            dictionaryAlgorithms = dictionaryAlgorithms.ToDictionary(p => p.Key, p => false);
+            dictionaryAlgorithms[algorithm] = value;
         }
         private void picCanvas_SizeChanged(object sender, EventArgs e)
         {
@@ -57,8 +83,8 @@ namespace Task2U2_AllAlgorithms
                         g.DrawImage(picCanvasCopy, 0, 0);
                     }
 
+                    animator.UpdateBitmap(newBitmap);
                     picCanvasCopy.Dispose();
-
                     picCanvasCopy = newBitmap;
                     picCanvas.Image = picCanvasCopy;
                 }
@@ -209,7 +235,6 @@ namespace Task2U2_AllAlgorithms
         {
             if (e.Button == MouseButtons.Left)
             {
-
                 linePoints.Add(new PointF(e.X, e.Y));
                 picCanvas.Invalidate();
             }
@@ -218,7 +243,6 @@ namespace Task2U2_AllAlgorithms
         private void drawInitArea()
         {
             polygon = new Polygon(4, 100, getCenter());
-            //polygon.SetCenter(getCenter());
             polygon.SetRotation(polygon.GetRad() / 2);
             canvasPoints = new List<PointF>(polygon.GetOutline());
             picCanvas.Invalidate();
@@ -226,25 +250,37 @@ namespace Task2U2_AllAlgorithms
 
         private void picCanvas_Paint(object sender, PaintEventArgs e)
         {
+            for (int i = 0; i < linePoints.Count; i++){
+                int colorIndex = i % colors.Count;
+                Color currentColor = this.colors[colorIndex];
+                int index = i;
+
+                using (Pen localPen = new Pen(currentColor, 2))
+                {
+                    e.Graphics.DrawEllipse(localPen, linePoints[i].X, linePoints[i].Y,2, 2);
+                }
+            }
+
             if (polygon != null)
             {
-                PointF[] points = polygon.GetOutline();
+                PointF[] points = polygon.GetOutline(); 
 
                 using (Pen localPen = new Pen(Color.Black, 2))
                 {
                     e.Graphics.DrawPolygon(localPen, points);
                 }
-                // e.Graphics.DrawEllipse(new Pen(Color.Orange, 2), points[0].X, points[0].Y, 2, 2);
             }
-            if (linePoints.Count > 2)
+            if (polygon == null & linePoints.Count % 2 == 0)
             {
-                //for (int i = 0; i < linePoints.Count; i += 2)
-                //{
-                //    e.Graphics.DrawLine(pen, linePoints[i], linePoints[i + 1]);
-                //}
+                for (int i = 0; i < linePoints.Count; i += 2)
+                {
+                    e.Graphics.DrawLine(pen, linePoints[i], linePoints[i + 1]);
+                }
+            }
 
+            if (polygon != null & linePoints.Count > 2)
+            {
                 e.Graphics.DrawPolygon(pen, linePoints.ToArray());
-
             }
 
             if (clippedPoints != null && clippedPoints.Length > 2)
@@ -261,7 +297,30 @@ namespace Task2U2_AllAlgorithms
 
         private void btnDDA_Click(object sender, EventArgs e)
         {
-            drawInitArea();
+            if (dictionaryAlgorithms["dda_enabled"] == false)
+            {
+                linePoints.Clear();
+                picCanvas.Invalidate();
+                polygon = null;
+
+                picCanvas.Paint -= picCanvas_Paint;
+                enableSelectedAlgorithm("dda_enabled");
+            }
+            else if (dictionaryAlgorithms["dda_enabled"] == true) {
+                for (int i = 0; i < linePoints.Count; i += 2) 
+                {
+                    Point p1 = new Point();
+                    Point p2 = new Point();
+
+                    p1.X = (int) linePoints[i].X;
+                    p1.Y = (int) linePoints[i].Y;
+
+                    p2.X = (int) linePoints[i + 1].X;
+                    p2.Y = (int) linePoints[i + 1].Y;
+
+                    DrawDDA_Algorithm(p1, p2);
+                }
+            }
         }
 
         private void btnBresenhamLines_Click(object sender, EventArgs e)
@@ -301,12 +360,98 @@ namespace Task2U2_AllAlgorithms
 
         private void btnCohenSutherland_Click(object sender, EventArgs e)
         {
-
+            linePoints.Clear();
+            picCanvas.Invalidate();
+            drawInitArea();
         }
 
         private void btnSutherlandHodgman_Click(object sender, EventArgs e)
         {
-
+            linePoints.Clear();
+            picCanvas.Invalidate();
+            drawInitArea();
         }
+
+        private void DrawDDA_Algorithm(Point p1, Point p2)
+        {
+            dda_lines = new DDA_Algorithm(p1, p2);
+            Point[] linePoints = dda_lines.getLinePoints();
+
+            animator.ClearFrames();
+            animator.EnsureFramesUpTo(linePoints.Length, linePoints);
+            animator.Play(50);
+        }
+
+        private void InputsLinesBresenham_OnDrawClicked(Point p1, Point p2)
+        {
+            bresenham_lines = new Bresenham_Lines_Algorithm(p1, p2);
+            Point[] linePoints = bresenham_lines.getBresenhamPoints();
+
+            animator.ClearFrames();
+            animator.EnsureFramesUpTo(linePoints.Length, linePoints);
+            animator.Play(50);
+        }
+
+        private Point[] GetCirclePointsUnique(int xc, int yc, int r)
+        {
+            HashSet<Point> points = new HashSet<Point>();
+            Bresenham_Circunference_Algorithm.DrawCircle(xc, yc, r, (x, y) => points.Add(new Point(x, y)));
+            return points.ToArray();
+        }
+
+        private void CircunferenceBresenham_OnDrawClicked(int radio)
+        {
+            int xc = picCanvas.Width / 2;
+            int yc = picCanvas.Height / 2;
+
+            Point[] circlePointsUnique = GetCirclePointsUnique(xc, yc, radio);
+
+            animator.ClearFrames();
+            animator.EnsureFramesFill(circlePointsUnique.Length, circlePointsUnique);
+            animator.Play(20);
+        }
+
+        private void InputsPolygon_OnDrawClicked(int lados, float magnitud, PointF center)
+        {
+            polygon = new Polygon(lados, magnitud, center);
+            PointF[] outline = polygon.GetOutline();
+
+            using (Graphics g = Graphics.FromImage(picCanvasCopy))
+            {
+                g.Clear(Color.White);
+                g.DrawPolygon(pen, outline);
+            }
+
+            animator.SetOutline(outline);
+
+            Point seed = new Point((int)center.X, (int)center.Y);
+            Point[] filledPixels = FloodFill_Algorithm.Recursive_Flood_Fill(picCanvasCopy, seed.X, seed.Y, Color.Blue);
+
+            animator.ClearFrames();
+            animator.EnsureFramesFill(filledPixels.Length, filledPixels);
+            animator.Play(10);
+        }
+
+        private void InputsPolygonParallel_OnDrawClicked(int lados, float magnitud, PointF center)
+        {
+            polygon = new Polygon(lados, magnitud, center);
+            PointF[] outline = polygon.GetOutline();
+
+            using (Graphics g = Graphics.FromImage(picCanvasCopy))
+            {
+                g.Clear(Color.White);
+                g.DrawPolygon(pen, outline);
+            }
+
+            animator.SetOutline(outline);
+
+            Point seed = new Point((int)center.X, (int)center.Y);
+            Point[] filledPixels = FloodFill_Algorithm.Iterative_Parallel_Flood_Fill(picCanvasCopy, seed.X, seed.Y, Color.Blue);
+
+            animator.ClearFrames();
+            animator.EnsureFramesFill(filledPixels.Length, filledPixels);
+            animator.Play(2);
+        }
+
     }
 }
