@@ -9,7 +9,7 @@ namespace Task2U2_AllAlgorithms.src.components
 {
     internal class Polygon
     {
-        private readonly int NumLados;
+        private int NumLados;
         private float Magnitud;
         private double RadRotate;
         private PointF Center;
@@ -65,6 +65,11 @@ namespace Task2U2_AllAlgorithms.src.components
         public int GetNumLados()
         {
             return NumLados;
+        }
+
+        public void SetNumLados(int numLados)
+        {
+            NumLados = numLados;
         }
 
         public void TraslateX(float x)

@@ -58,7 +58,7 @@ namespace Task2U2_AllAlgorithms.src.components.Animations
                 {
                     using (Pen localPen = new Pen(currentColor, 2))
                     {
-                        g.DrawRectangle(localPen, points[index].X, points[index].Y, 2, 2);
+                        g.DrawRectangle(localPen, points[index].X, points[index].Y, 1, 1);
                     }
                 });
             }
@@ -101,6 +101,15 @@ namespace Task2U2_AllAlgorithms.src.components.Animations
             else
             {
                 animationTimer.Stop();
+            }
+        }
+
+        public void ClearImage()
+        {
+            using (Graphics g = Graphics.FromImage(canvasBitmap))
+            {
+                g.Clear(Color.White);
+
             }
         }
 

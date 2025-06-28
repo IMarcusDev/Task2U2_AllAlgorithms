@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.bigLabel1 = new ReaLTaiizor.Controls.BigLabel();
             this.nightControlBox1 = new ReaLTaiizor.Controls.NightControlBox();
             this.btnHamburger = new System.Windows.Forms.PictureBox();
             this.sideBarContainer = new System.Windows.Forms.FlowLayoutPanel();
@@ -52,13 +53,6 @@
             this.btnBeizerCurves = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
             this.btnBSplinesCurves = new System.Windows.Forms.Button();
-            this.clippingContainer = new System.Windows.Forms.FlowLayoutPanel();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.btnClipping = new System.Windows.Forms.Button();
-            this.panel10 = new System.Windows.Forms.Panel();
-            this.btnCohenSutherland = new System.Windows.Forms.Button();
-            this.panel11 = new System.Windows.Forms.Panel();
-            this.btnSutherlandHodgman = new System.Windows.Forms.Button();
             this.regionFillContainer = new System.Windows.Forms.FlowLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnRegionFill = new System.Windows.Forms.Button();
@@ -66,13 +60,21 @@
             this.btnFloodFill = new System.Windows.Forms.Button();
             this.panel13 = new System.Windows.Forms.Panel();
             this.btnIncrementalFill = new System.Windows.Forms.Button();
+            this.clippingContainer = new System.Windows.Forms.FlowLayoutPanel();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.btnClipping = new System.Windows.Forms.Button();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.btnCohenSutherland = new System.Windows.Forms.Button();
+            this.panel11 = new System.Windows.Forms.Panel();
+            this.btnSutherlandHodgman = new System.Windows.Forms.Button();
             this.rasterizationTransition = new System.Windows.Forms.Timer(this.components);
             this.parametricTimer = new System.Windows.Forms.Timer(this.components);
             this.regionTimer = new System.Windows.Forms.Timer(this.components);
             this.clippingTimer = new System.Windows.Forms.Timer(this.components);
             this.sideBarTimer = new System.Windows.Forms.Timer(this.components);
             this.picCanvas = new System.Windows.Forms.PictureBox();
-            this.bigLabel1 = new ReaLTaiizor.Controls.BigLabel();
+            this.trbRadious = new ReaLTaiizor.Controls.PoisonTrackBar();
+            this.trbNumLados = new System.Windows.Forms.TrackBar();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnHamburger)).BeginInit();
             this.sideBarContainer.SuspendLayout();
@@ -86,15 +88,16 @@
             this.panel8.SuspendLayout();
             this.panel7.SuspendLayout();
             this.panel6.SuspendLayout();
-            this.clippingContainer.SuspendLayout();
-            this.panel5.SuspendLayout();
-            this.panel10.SuspendLayout();
-            this.panel11.SuspendLayout();
             this.regionFillContainer.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel12.SuspendLayout();
             this.panel13.SuspendLayout();
+            this.clippingContainer.SuspendLayout();
+            this.panel5.SuspendLayout();
+            this.panel10.SuspendLayout();
+            this.panel11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picCanvas)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trbNumLados)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -108,6 +111,18 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1299, 100);
             this.panel1.TabIndex = 0;
+            // 
+            // bigLabel1
+            // 
+            this.bigLabel1.AutoSize = true;
+            this.bigLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.bigLabel1.Font = new System.Drawing.Font("Segoe UI", 25F);
+            this.bigLabel1.ForeColor = System.Drawing.Color.White;
+            this.bigLabel1.Location = new System.Drawing.Point(85, 12);
+            this.bigLabel1.Name = "bigLabel1";
+            this.bigLabel1.Size = new System.Drawing.Size(451, 67);
+            this.bigLabel1.TabIndex = 3;
+            this.bigLabel1.Text = "Graphic Algorithms";
             // 
             // nightControlBox1
             // 
@@ -388,94 +403,6 @@
             this.btnBSplinesCurves.UseVisualStyleBackColor = false;
             this.btnBSplinesCurves.Click += new System.EventHandler(this.btnBSplinesCurves_Click);
             // 
-            // clippingContainer
-            // 
-            this.clippingContainer.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.clippingContainer.Controls.Add(this.panel5);
-            this.clippingContainer.Controls.Add(this.panel10);
-            this.clippingContainer.Controls.Add(this.panel11);
-            this.clippingContainer.Location = new System.Drawing.Point(0, 393);
-            this.clippingContainer.Margin = new System.Windows.Forms.Padding(0, 70, 0, 0);
-            this.clippingContainer.Name = "clippingContainer";
-            this.clippingContainer.Size = new System.Drawing.Size(330, 61);
-            this.clippingContainer.TabIndex = 9;
-            // 
-            // panel5
-            // 
-            this.panel5.Controls.Add(this.btnClipping);
-            this.panel5.Location = new System.Drawing.Point(3, 3);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(327, 61);
-            this.panel5.TabIndex = 5;
-            // 
-            // btnClipping
-            // 
-            this.btnClipping.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnClipping.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClipping.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnClipping.Image = ((System.Drawing.Image)(resources.GetObject("btnClipping.Image")));
-            this.btnClipping.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClipping.Location = new System.Drawing.Point(-9, -38);
-            this.btnClipping.Margin = new System.Windows.Forms.Padding(0);
-            this.btnClipping.Name = "btnClipping";
-            this.btnClipping.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
-            this.btnClipping.Size = new System.Drawing.Size(345, 134);
-            this.btnClipping.TabIndex = 2;
-            this.btnClipping.Text = "                Clipping";
-            this.btnClipping.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClipping.UseVisualStyleBackColor = false;
-            this.btnClipping.Click += new System.EventHandler(this.btnClipping_Click);
-            // 
-            // panel10
-            // 
-            this.panel10.Controls.Add(this.btnCohenSutherland);
-            this.panel10.Location = new System.Drawing.Point(3, 70);
-            this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(327, 61);
-            this.panel10.TabIndex = 7;
-            // 
-            // btnCohenSutherland
-            // 
-            this.btnCohenSutherland.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnCohenSutherland.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCohenSutherland.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnCohenSutherland.Image = ((System.Drawing.Image)(resources.GetObject("btnCohenSutherland.Image")));
-            this.btnCohenSutherland.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCohenSutherland.Location = new System.Drawing.Point(-9, -38);
-            this.btnCohenSutherland.Name = "btnCohenSutherland";
-            this.btnCohenSutherland.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
-            this.btnCohenSutherland.Size = new System.Drawing.Size(345, 134);
-            this.btnCohenSutherland.TabIndex = 2;
-            this.btnCohenSutherland.Text = "                Cohen-                                 Sutherland";
-            this.btnCohenSutherland.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCohenSutherland.UseVisualStyleBackColor = false;
-            this.btnCohenSutherland.Click += new System.EventHandler(this.btnCohenSutherland_Click);
-            // 
-            // panel11
-            // 
-            this.panel11.Controls.Add(this.btnSutherlandHodgman);
-            this.panel11.Location = new System.Drawing.Point(3, 137);
-            this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(327, 61);
-            this.panel11.TabIndex = 6;
-            // 
-            // btnSutherlandHodgman
-            // 
-            this.btnSutherlandHodgman.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnSutherlandHodgman.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSutherlandHodgman.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnSutherlandHodgman.Image = ((System.Drawing.Image)(resources.GetObject("btnSutherlandHodgman.Image")));
-            this.btnSutherlandHodgman.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSutherlandHodgman.Location = new System.Drawing.Point(-9, -38);
-            this.btnSutherlandHodgman.Name = "btnSutherlandHodgman";
-            this.btnSutherlandHodgman.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
-            this.btnSutherlandHodgman.Size = new System.Drawing.Size(345, 134);
-            this.btnSutherlandHodgman.TabIndex = 2;
-            this.btnSutherlandHodgman.Text = "                Sutherland-                          Hodgman";
-            this.btnSutherlandHodgman.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSutherlandHodgman.UseVisualStyleBackColor = false;
-            this.btnSutherlandHodgman.Click += new System.EventHandler(this.btnSutherlandHodgman_Click);
-            // 
             // regionFillContainer
             // 
             this.regionFillContainer.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
@@ -564,6 +491,94 @@
             this.btnIncrementalFill.UseVisualStyleBackColor = false;
             this.btnIncrementalFill.Click += new System.EventHandler(this.btnIncrementalFill_Click);
             // 
+            // clippingContainer
+            // 
+            this.clippingContainer.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.clippingContainer.Controls.Add(this.panel5);
+            this.clippingContainer.Controls.Add(this.panel10);
+            this.clippingContainer.Controls.Add(this.panel11);
+            this.clippingContainer.Location = new System.Drawing.Point(0, 393);
+            this.clippingContainer.Margin = new System.Windows.Forms.Padding(0, 70, 0, 0);
+            this.clippingContainer.Name = "clippingContainer";
+            this.clippingContainer.Size = new System.Drawing.Size(330, 61);
+            this.clippingContainer.TabIndex = 9;
+            // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.btnClipping);
+            this.panel5.Location = new System.Drawing.Point(3, 3);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(327, 61);
+            this.panel5.TabIndex = 5;
+            // 
+            // btnClipping
+            // 
+            this.btnClipping.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnClipping.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClipping.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnClipping.Image = ((System.Drawing.Image)(resources.GetObject("btnClipping.Image")));
+            this.btnClipping.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnClipping.Location = new System.Drawing.Point(-9, -38);
+            this.btnClipping.Margin = new System.Windows.Forms.Padding(0);
+            this.btnClipping.Name = "btnClipping";
+            this.btnClipping.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.btnClipping.Size = new System.Drawing.Size(345, 134);
+            this.btnClipping.TabIndex = 2;
+            this.btnClipping.Text = "                Clipping";
+            this.btnClipping.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnClipping.UseVisualStyleBackColor = false;
+            this.btnClipping.Click += new System.EventHandler(this.btnClipping_Click);
+            // 
+            // panel10
+            // 
+            this.panel10.Controls.Add(this.btnCohenSutherland);
+            this.panel10.Location = new System.Drawing.Point(3, 70);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(327, 61);
+            this.panel10.TabIndex = 7;
+            // 
+            // btnCohenSutherland
+            // 
+            this.btnCohenSutherland.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnCohenSutherland.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCohenSutherland.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnCohenSutherland.Image = ((System.Drawing.Image)(resources.GetObject("btnCohenSutherland.Image")));
+            this.btnCohenSutherland.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCohenSutherland.Location = new System.Drawing.Point(-9, -38);
+            this.btnCohenSutherland.Name = "btnCohenSutherland";
+            this.btnCohenSutherland.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.btnCohenSutherland.Size = new System.Drawing.Size(345, 134);
+            this.btnCohenSutherland.TabIndex = 2;
+            this.btnCohenSutherland.Text = "                Cohen-                                 Sutherland";
+            this.btnCohenSutherland.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCohenSutherland.UseVisualStyleBackColor = false;
+            this.btnCohenSutherland.Click += new System.EventHandler(this.btnCohenSutherland_Click);
+            // 
+            // panel11
+            // 
+            this.panel11.Controls.Add(this.btnSutherlandHodgman);
+            this.panel11.Location = new System.Drawing.Point(3, 137);
+            this.panel11.Name = "panel11";
+            this.panel11.Size = new System.Drawing.Size(327, 61);
+            this.panel11.TabIndex = 6;
+            // 
+            // btnSutherlandHodgman
+            // 
+            this.btnSutherlandHodgman.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btnSutherlandHodgman.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSutherlandHodgman.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnSutherlandHodgman.Image = ((System.Drawing.Image)(resources.GetObject("btnSutherlandHodgman.Image")));
+            this.btnSutherlandHodgman.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSutherlandHodgman.Location = new System.Drawing.Point(-9, -38);
+            this.btnSutherlandHodgman.Name = "btnSutherlandHodgman";
+            this.btnSutherlandHodgman.Padding = new System.Windows.Forms.Padding(25, 0, 0, 0);
+            this.btnSutherlandHodgman.Size = new System.Drawing.Size(345, 134);
+            this.btnSutherlandHodgman.TabIndex = 2;
+            this.btnSutherlandHodgman.Text = "                Sutherland-                          Hodgman";
+            this.btnSutherlandHodgman.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSutherlandHodgman.UseVisualStyleBackColor = false;
+            this.btnSutherlandHodgman.Click += new System.EventHandler(this.btnSutherlandHodgman_Click);
+            // 
             // rasterizationTransition
             // 
             this.rasterizationTransition.Interval = 10;
@@ -599,17 +614,32 @@
             this.picCanvas.TabStop = false;
             this.picCanvas.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picCanvas_MouseClick);
             // 
-            // bigLabel1
+            // trbRadious
             // 
-            this.bigLabel1.AutoSize = true;
-            this.bigLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.bigLabel1.Font = new System.Drawing.Font("Segoe UI", 25F);
-            this.bigLabel1.ForeColor = System.Drawing.Color.White;
-            this.bigLabel1.Location = new System.Drawing.Point(85, 12);
-            this.bigLabel1.Name = "bigLabel1";
-            this.bigLabel1.Size = new System.Drawing.Size(451, 67);
-            this.bigLabel1.TabIndex = 3;
-            this.bigLabel1.Text = "Graphic Algorithms";
+            this.trbRadious.BackColor = System.Drawing.Color.Transparent;
+            this.trbRadious.Enabled = false;
+            this.trbRadious.Location = new System.Drawing.Point(503, 123);
+            this.trbRadious.Minimum = 10;
+            this.trbRadious.Name = "trbRadious";
+            this.trbRadious.Size = new System.Drawing.Size(665, 38);
+            this.trbRadious.TabIndex = 6;
+            this.trbRadious.Text = "poisonTrackBar1";
+            this.trbRadious.Value = 49;
+            this.trbRadious.Visible = false;
+            this.trbRadious.ValueChanged += new System.EventHandler(this.trbRadious_ValueChanged);
+            // 
+            // trbNumLados
+            // 
+            this.trbNumLados.Enabled = false;
+            this.trbNumLados.Location = new System.Drawing.Point(362, 170);
+            this.trbNumLados.Minimum = 3;
+            this.trbNumLados.Name = "trbNumLados";
+            this.trbNumLados.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.trbNumLados.Size = new System.Drawing.Size(69, 460);
+            this.trbNumLados.TabIndex = 12;
+            this.trbNumLados.Value = 3;
+            this.trbNumLados.Visible = false;
+            this.trbNumLados.ValueChanged += new System.EventHandler(this.trbNumLados_ValueChanged);
             // 
             // Main
             // 
@@ -617,6 +647,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(1299, 817);
+            this.Controls.Add(this.trbNumLados);
+            this.Controls.Add(this.trbRadious);
             this.Controls.Add(this.picCanvas);
             this.Controls.Add(this.sideBarContainer);
             this.Controls.Add(this.panel1);
@@ -637,16 +669,18 @@
             this.panel8.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
-            this.clippingContainer.ResumeLayout(false);
-            this.panel5.ResumeLayout(false);
-            this.panel10.ResumeLayout(false);
-            this.panel11.ResumeLayout(false);
             this.regionFillContainer.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel12.ResumeLayout(false);
             this.panel13.ResumeLayout(false);
+            this.clippingContainer.ResumeLayout(false);
+            this.panel5.ResumeLayout(false);
+            this.panel10.ResumeLayout(false);
+            this.panel11.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picCanvas)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trbNumLados)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -695,6 +729,8 @@
         private System.Windows.Forms.Timer sideBarTimer;
         private System.Windows.Forms.PictureBox picCanvas;
         private ReaLTaiizor.Controls.BigLabel bigLabel1;
+        private ReaLTaiizor.Controls.PoisonTrackBar trbRadious;
+        private System.Windows.Forms.TrackBar trbNumLados;
     }
 }
 

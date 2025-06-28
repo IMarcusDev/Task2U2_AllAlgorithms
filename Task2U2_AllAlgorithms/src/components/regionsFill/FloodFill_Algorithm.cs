@@ -10,7 +10,7 @@ namespace Task2U2_AllAlgorithms.src.components.regionsFill
 {
     internal class FloodFill_Algorithm
     {
-        public static Point[] Recursive_Flood_Fill(Bitmap canvas, int x, int y, Color fillColor, int maxDepth = 10000)
+        public static Point[] Recursive_Flood_Fill(Bitmap canvas, int x, int y, Color fillColor)
         {
             Color targetColor = canvas.GetPixel(x, y);
             if (targetColor.ToArgb() == fillColor.ToArgb())
@@ -19,15 +19,13 @@ namespace Task2U2_AllAlgorithms.src.components.regionsFill
             HashSet<Point> visited = new HashSet<Point>();
             List<Point> result = new List<Point>();
 
-            RecursiveFill(canvas, x, y, targetColor, fillColor, visited, result, 0, maxDepth);
+            RecursiveFill(canvas, x, y, targetColor, fillColor, visited, result);
 
             return result.ToArray();
         }
 
-        private static void RecursiveFill(Bitmap canvas, int x, int y, Color targetColor, Color fillColor, HashSet<Point> visited, List<Point> result, int depth, int maxDepth)
+        private static void RecursiveFill(Bitmap canvas, int x, int y, Color targetColor, Color fillColor, HashSet<Point> visited, List<Point> result)
         {
-            if (depth > maxDepth)
-                return;
             if (x < 0 || y < 0 || x >= canvas.Width || y >= canvas.Height)
                 return;
 
@@ -42,10 +40,10 @@ namespace Task2U2_AllAlgorithms.src.components.regionsFill
             result.Add(p);
             visited.Add(p);
 
-            RecursiveFill(canvas, x, y + 1, targetColor, fillColor, visited, result, depth + 1, maxDepth);
-            RecursiveFill(canvas, x + 1, y, targetColor, fillColor, visited, result, depth + 1, maxDepth);
-            RecursiveFill(canvas, x, y - 1, targetColor, fillColor, visited, result, depth + 1, maxDepth);
-            RecursiveFill(canvas, x - 1, y, targetColor, fillColor, visited, result, depth + 1, maxDepth);
+            RecursiveFill(canvas, x, y + 1, targetColor, fillColor, visited, result);
+            RecursiveFill(canvas, x + 1, y, targetColor, fillColor, visited, result);
+            RecursiveFill(canvas, x, y - 1, targetColor, fillColor, visited, result);
+            RecursiveFill(canvas, x - 1, y, targetColor, fillColor, visited, result);
         }
     
         public static Point[] Iterative_Parallel_Flood_Fill(Bitmap canvas, int x, int y, Color color)

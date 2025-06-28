@@ -71,6 +71,7 @@
     <Compile Include="src\components\rasterization\Polygon.cs" />
     <Compile Include="src\components\regionsFill\FloodFill_Algorithm.cs" />
     <Compile Include="src\components\regionsFill\IncrementalFill_Algoritm.cs" />
+    <Compile Include="src\components\tools\Lines.cs" />
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>

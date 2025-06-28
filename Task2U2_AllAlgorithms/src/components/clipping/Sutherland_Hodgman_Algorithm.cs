@@ -133,4 +133,4 @@ namespace Task2U2_AllAlgorithms.src.components.clipping
         }
     }
 }
-}
+
