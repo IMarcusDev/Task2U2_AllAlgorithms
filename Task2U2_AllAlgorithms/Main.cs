@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Task2U2_AllAlgorithms.src.components;
 using Task2U2_AllAlgorithms.src.components.Animations;
+using Task2U2_AllAlgorithms.src.components.clipping;
+using Task2U2_AllAlgorithms.src.components.parametricCurves;
 using Task2U2_AllAlgorithms.src.components.regionsFill;
 
 namespace Task2U2_AllAlgorithms
@@ -23,6 +25,7 @@ namespace Task2U2_AllAlgorithms
         private List<PointF> linePoints = new List<PointF>();
         private List<PointF> canvasPoints = new List<PointF>();
         private PointF[] clippedPoints;
+        private PointF[] curvePoints;
         List<Color> colors = new List<Color> { Color.Violet, Color.Red, Color.Purple, Color.Green, Color.DarkGreen, Color.DarkOrange, Color.Orange, Color.Peru, Color.Pink, Color.Tan };
         private Pen pen;
         private CanvasAnimator animator;
@@ -53,9 +56,9 @@ namespace Task2U2_AllAlgorithms
             dictionaryAlgorithms.Add("bresenham_circunference_enabled", false);
             dictionaryAlgorithms.Add("bresenham_ellipse_enabled", false);
             dictionaryAlgorithms.Add("floodFill_enable", false);
-            dictionaryAlgorithms.Add("incrementalFill", false);
-            dictionaryAlgorithms.Add("cohen_sutherland", false);
-            dictionaryAlgorithms.Add("sutherland_hodgman", false);
+            dictionaryAlgorithms.Add("incrementalFill_enabled", false);
+            dictionaryAlgorithms.Add("cohen_sutherland_enable", false);
+            dictionaryAlgorithms.Add("sutherland_hodgman_enable", false);
             dictionaryAlgorithms.Add("beizer_enable", false);
             dictionaryAlgorithms.Add("bSplines_enabled", false);
         }
@@ -239,6 +242,7 @@ namespace Task2U2_AllAlgorithms
         {
             if (e.Button == MouseButtons.Left)
             {
+                if (dictionaryAlgorithms["beizer_enable"] && linePoints.Count() > 3) { return; }
                 linePoints.Add(new PointF(e.X, e.Y));
                 picCanvas.Invalidate();
             }
@@ -286,7 +290,7 @@ namespace Task2U2_AllAlgorithms
                     e.Graphics.DrawPolygon(localPen, points);
                 }
             }
-            if (polygon == null & polygonFill == null & linePoints.Count % 2 == 0)
+            if (linePoints.Count % 2 == 0 || (dictionaryAlgorithms["cohen_sutherland_enable"] == true && linePoints.Count % 2 == 0))
             {
                 for (int i = 0; i < linePoints.Count; i += 2)
                 {
@@ -294,7 +298,7 @@ namespace Task2U2_AllAlgorithms
                 }
             }
 
-            if (polygon != null & linePoints.Count > 2)
+            if (linePoints.Count > 2 && dictionaryAlgorithms["sutherland_hodgman_enable"] == true)
             {
                 e.Graphics.DrawPolygon(pen, linePoints.ToArray());
             }
@@ -307,9 +311,19 @@ namespace Task2U2_AllAlgorithms
                     e.Graphics.DrawEllipse(new Pen(Color.Orange, 2), clippedPoints[i + 1].X, clippedPoints[i + 1].Y, 2, 2);
                     e.Graphics.DrawLine(new Pen(Color.Red), clippedPoints[i], clippedPoints[i + 1]);
                 }
-                //e.Graphics.DrawPolygon(new Pen(Color.Red), clippedPoints);
+            }
+
+            if(curvePoints != null && (dictionaryAlgorithms["beizer_enable"] == true || dictionaryAlgorithms["bSplines_enabled"] == true))
+            {
+                for (int i = 0; i < curvePoints.Length - 1; i += 2)
+                {
+                    e.Graphics.DrawEllipse(new Pen(Color.Blue, 2), curvePoints[i].X, curvePoints[i].Y, 2, 2);
+                    e.Graphics.DrawEllipse(new Pen(Color.Orange, 2), curvePoints[i + 1].X, curvePoints[i + 1].Y, 2, 2);
+                    e.Graphics.DrawLine(new Pen(Color.Red), curvePoints[i], curvePoints[i + 1]);
+                }
             }
         }
+
 
         private void btnDDA_Click(object sender, EventArgs e)
         {
@@ -321,8 +335,11 @@ namespace Task2U2_AllAlgorithms
                 animator.ClearImage();
                 picCanvas.Invalidate();
                 polygon = null;
+                polygonFill = null;
                 trbRadious.Visible = false;
                 trbRadious.Enabled = false;
+                trbNumLados.Visible = false;
+                trbNumLados.Enabled = false;
 
                 enableSelectedAlgorithm("dda_enabled");
             }
@@ -353,8 +370,11 @@ namespace Task2U2_AllAlgorithms
                 animator.ClearImage();
                 picCanvas.Invalidate();
                 polygon = null;
+                polygonFill = null;
                 trbRadious.Visible = false;
                 trbRadious.Enabled = false;
+                trbNumLados.Visible = false;
+                trbNumLados.Enabled = false;
 
                 enableSelectedAlgorithm("bresenham_lines_enabled");
             }
@@ -386,8 +406,11 @@ namespace Task2U2_AllAlgorithms
                 animator.ClearImage();
                 picCanvas.Invalidate();
                 polygon = null;
+                polygonFill = null;
                 trbRadious.Visible = true;
                 trbRadious.Enabled = true;
+                trbNumLados.Visible = false;
+                trbNumLados.Enabled = false;
 
                 enableSelectedAlgorithm("bresenham_circunference_enabled");
             }
@@ -395,17 +418,74 @@ namespace Task2U2_AllAlgorithms
 
         private void btnBresenhamEllipse_Click(object sender, EventArgs e)
         {
+            if (dictionaryAlgorithms["bresenham_ellipse_enabled"] == false)
+            {
+                linePoints.Clear();
+                visited.Clear();
+                animator.ClearFrames();
+                animator.ClearImage();
+                picCanvas.Invalidate();
+                polygon = null;
+                polygonFill = null;
+                trbRadious.Visible = true;
+                trbRadious.Enabled = true;
+                trbNumLados.Visible = true;
+                trbNumLados.Enabled = true;
 
+                enableSelectedAlgorithm("bresenham_ellipse_enabled");
+            }
         }
 
         private void btnBeizerCurves_Click(object sender, EventArgs e)
         {
+            if (dictionaryAlgorithms["beizer_enable"] == false)
+            {
+                linePoints.Clear();
+                visited.Clear();
+                animator.ClearFrames();
+                animator.ClearImage();
+                picCanvas.Invalidate();
+                polygon = null;
+                polygonFill = null;
+                trbRadious.Visible = false;
+                trbRadious.Enabled = false;
+                trbNumLados.Visible = false;
+                trbNumLados.Enabled = false;
 
+                enableSelectedAlgorithm("beizer_enable");
+            }
+            else if (dictionaryAlgorithms["beizer_enable"] == true)
+            {
+                curvePoints = Bezier_Algorithm.CalculateBezier(linePoints);
+                linePoints.Clear();
+                picCanvas.Invalidate();
+            }
         }
 
         private void btnBSplinesCurves_Click(object sender, EventArgs e)
         {
+            if (dictionaryAlgorithms["bSplines_enabled"] == false)
+            {
+                linePoints.Clear();
+                visited.Clear();
+                animator.ClearFrames();
+                animator.ClearImage();
+                picCanvas.Invalidate();
+                polygon = null;
+                polygonFill = null;
+                trbRadious.Visible = false;
+                trbRadious.Enabled = false;
+                trbNumLados.Visible = false;
+                trbNumLados.Enabled = false;
 
+                enableSelectedAlgorithm("bSplines_enabled");
+            }
+            else if (dictionaryAlgorithms["bSplines_enabled"] == true)
+            {
+                curvePoints = BSplines_Algorithm.BSplineCurve(linePoints.ToArray());
+                linePoints.Clear();
+                picCanvas.Invalidate();
+            }
         }
 
         private void btnFloodFill_Click(object sender, EventArgs e)
@@ -418,6 +498,7 @@ namespace Task2U2_AllAlgorithms
                 animator.ClearImage();
                 picCanvas.Invalidate();
                 polygon = null;
+                polygonFill = null;
                 trbRadious.Visible = true;
                 trbRadious.Enabled = true;
                 trbNumLados.Visible = true;
@@ -431,27 +512,92 @@ namespace Task2U2_AllAlgorithms
             {
                 animator.ClearFrames();
                 animator.ClearImage();
-                drawPolygonFill_Algorithm();
+                drawPolygonFill_FloodFillAlgorithm();
             }
         }
 
         private void btnIncrementalFill_Click(object sender, EventArgs e)
         {
+            if (dictionaryAlgorithms["incrementalFill_enabled"] == false)
+            {
+                linePoints.Clear();
+                visited.Clear();
+                animator.ClearFrames();
+                animator.ClearImage();
+                picCanvas.Invalidate();
+                polygon = null;
+                polygonFill = null;
+                trbRadious.Visible = true;
+                trbRadious.Enabled = true;
+                trbNumLados.Visible = true;
+                trbNumLados.Enabled = true;
 
+                initPolygonToFill();
+
+                enableSelectedAlgorithm("incrementalFill_enabled");
+            }
+            else if (dictionaryAlgorithms["incrementalFill_enabled"] == true)
+            {
+                animator.ClearFrames();
+                animator.ClearImage();
+                drawPolygonFill_ScanFillAlgorithm();
+            }
         }
 
         private void btnCohenSutherland_Click(object sender, EventArgs e)
         {
-            linePoints.Clear();
-            picCanvas.Invalidate();
-            drawInitArea();
+            if (dictionaryAlgorithms["cohen_sutherland_enable"] == false)
+            {
+                linePoints.Clear();
+                visited.Clear();
+                animator.ClearFrames();
+                animator.ClearImage();
+                picCanvas.Invalidate();
+                polygon = null;
+                polygonFill = null;
+                trbRadious.Visible = false;
+                trbRadious.Enabled = false;
+                trbNumLados.Visible = false;
+                trbNumLados.Enabled = false;
+
+                drawInitArea();
+
+                enableSelectedAlgorithm("cohen_sutherland_enable");
+            }else if (dictionaryAlgorithms["cohen_sutherland_enable"] == true)
+            {
+                clippedPoints = Cohen_Sutherland_Algorithm.clippingCohenSutherlandAlgorithm(linePoints, canvasPoints.ToArray());
+                linePoints.Clear();
+                picCanvas.Invalidate();
+            }
         }
 
         private void btnSutherlandHodgman_Click(object sender, EventArgs e)
         {
-            linePoints.Clear();
-            picCanvas.Invalidate();
-            drawInitArea();
+            if (dictionaryAlgorithms["sutherland_hodgman_enable"] == false)
+            {
+                linePoints.Clear();
+                visited.Clear();
+                animator.ClearFrames();
+                animator.ClearImage();
+                picCanvas.Invalidate();
+                polygon = null;
+                polygonFill = null;
+                trbRadious.Visible = false;
+                trbRadious.Enabled = false;
+                trbNumLados.Visible = false;
+                trbNumLados.Enabled = false;
+
+                drawInitArea();
+
+                enableSelectedAlgorithm("sutherland_hodgman_enable");
+            }
+            else if (dictionaryAlgorithms["sutherland_hodgman_enable"] == true)
+            {
+                linePoints.Add(linePoints[0]);
+                clippedPoints = Sutherland_Hodgman_Algorithm.clippingSutherlandHodgmanAlgorithm(linePoints, canvasPoints.ToArray());
+                linePoints.Clear();
+                picCanvas.Invalidate();
+            }
         }
 
         private void DrawDDA_Algorithm(Point p1, Point p2)
@@ -498,6 +644,12 @@ namespace Task2U2_AllAlgorithms
             Bresenham_Circunference_Algorithm.DrawCircle(xc, yc, r, (x, y) => points.Add(new Point(x, y)));
             return points.ToArray();
         }
+        private Point[] GetEllipsePointsUnique(int xc, int yc, int rx, int ry)
+        {
+            HashSet<Point> points = new HashSet<Point>();
+            Bresenham_Ellipse_Algorithm.DrawEllipse(xc, yc, rx, ry, (x, y) => points.Add(new Point(x, y)));
+            return points.ToArray();
+        }
 
         private void DrawBresenham_Circunference_Algorithm(int radio)
         {
@@ -510,8 +662,19 @@ namespace Task2U2_AllAlgorithms
             animator.EnsureFramesFill(circlePointsUnique.Length, circlePointsUnique);
             animator.Play(10);
         }
+        private void DrawBresenham_Ellipse_Algorithm(int radiox = 0, int radioy = 0)
+        {
+            int xc = picCanvas.Width / 2;
+            int yc = picCanvas.Height / 2;
 
-        private void drawPolygonFill_Algorithm()
+            Point[] circlePointsUnique = GetEllipsePointsUnique(xc, yc, radiox, radioy);
+
+            animator.ClearFrames();
+            animator.EnsureFramesFill(circlePointsUnique.Length, circlePointsUnique);
+            animator.Play(10);
+        }
+
+        private void drawPolygonFill_FloodFillAlgorithm()
         {
             PointF[] outline = polygonFill.GetOutline();
 
@@ -542,10 +705,14 @@ namespace Task2U2_AllAlgorithms
             animator.Play(5);
         }
 
-        private void InputsPolygonParallel_OnDrawClicked(int lados, float magnitud, PointF center)
+        private void drawBeizer_Algorithm()
         {
-            polygon = new Polygon(lados, magnitud, center);
-            PointF[] outline = polygon.GetOutline();
+
+        }
+
+        private void drawPolygonFill_ScanFillAlgorithm()
+        {
+            PointF[] outline = polygonFill.GetOutline();
 
             using (Graphics g = Graphics.FromImage(picCanvasCopy))
             {
@@ -555,12 +722,16 @@ namespace Task2U2_AllAlgorithms
 
             animator.SetOutline(outline);
 
-            Point seed = new Point((int)center.X, (int)center.Y);
-            Point[] filledPixels = FloodFill_Algorithm.Iterative_Parallel_Flood_Fill(picCanvasCopy, seed.X, seed.Y, Color.Blue);
+            Point seed = new Point();
+            seed.X = (int)getCenter().X;
+            seed.Y = (int)getCenter().Y;
+
+            Point[] filledPixels = new Point[0];
+            filledPixels = IncrementalFill_Algoritm.ScanlineFill(picCanvasCopy, seed.X, seed.Y, Color.Blue);
 
             animator.ClearFrames();
             animator.EnsureFramesFill(filledPixels.Length, filledPixels);
-            animator.Play(2);
+            animator.Play(5);
         }
 
         private void trbRadious_ValueChanged(object sender, EventArgs e)
@@ -570,22 +741,33 @@ namespace Task2U2_AllAlgorithms
             {
                 DrawBresenham_Circunference_Algorithm(trValue);
             }
-            if(dictionaryAlgorithms["floodFill_enable"] == true)
+            if(dictionaryAlgorithms["floodFill_enable"] == true || dictionaryAlgorithms["incrementalFill_enabled"] == true)
             {
                 animator.ClearFrames();
                 animator.ClearImage();
                 polygonFill.SetMagnitud(trValue);
                 picCanvas.Invalidate();
+            }if(dictionaryAlgorithms["bresenham_ellipse_enabled"] == true)
+            {
+                DrawBresenham_Ellipse_Algorithm(trValue, trbNumLados.Value);
             }
             
         }
 
         private void trbNumLados_ValueChanged(object sender, EventArgs e)
         {
-            animator.ClearFrames();
-            animator.ClearImage();
-            polygonFill.SetNumLados(trbNumLados.Value);
-            picCanvas.Invalidate();
+            if(polygonFill != null)
+            {
+                animator.ClearFrames();
+                animator.ClearImage();
+                polygonFill.SetNumLados(trbNumLados.Value);
+                picCanvas.Invalidate();
+            }
+            if (dictionaryAlgorithms["bresenham_ellipse_enabled"] == true)
+            {
+                trbNumLados.Maximum = 100;
+                DrawBresenham_Ellipse_Algorithm(trbRadious.Value, trbNumLados.Value);
+            }
         }
     }
 }
