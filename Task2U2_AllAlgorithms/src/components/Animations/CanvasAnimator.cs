@@ -44,6 +44,7 @@ namespace Task2U2_AllAlgorithms.src.components.Animations
         public void ClearFrames()
         {
             frames.Clear();
+            lastPolygonOutline = null;
         }
 
         public void EnsureFramesUpTo(int target, Point[] points)

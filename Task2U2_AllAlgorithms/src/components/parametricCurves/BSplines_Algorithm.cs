@@ -9,7 +9,7 @@ namespace Task2U2_AllAlgorithms.src.components.parametricCurves
 {
     internal class BSplines_Algorithm
     {
-        public static PointF[] BSplineCurve(PointF[] controlPoints, int degree = 3, int steps = 100)
+        public static PointF[] BSplineCurve(PointF[] controlPoints, int degree = 1, int steps = 100)
         {
             int n = controlPoints.Length - 1;
             int m = n + degree + 1;
