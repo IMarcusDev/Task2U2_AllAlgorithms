@@ -61,6 +61,8 @@ namespace Task2U2_AllAlgorithms
             dictionaryAlgorithms.Add("sutherland_hodgman_enable", false);
             dictionaryAlgorithms.Add("beizer_enable", false);
             dictionaryAlgorithms.Add("bSplines_enabled", false);
+
+            MessageBox.Show("Bienvenidos al programa de graficación de algortimos gráficos. \n 🤖 Para utilizar el programa debe dar click en cada categoría que le dara acceso a las subcategorías \n 🤯 Luego debe seleccionar cualquiera de los metodos que desea y dependiendo del algoritmo puede colocar manualmente los puntos en el canvas sino tendra a su disposición slideBars para generar dianamicamente. \n Para el caso de los metodos donde coloca manualmente los puntos dando click sobre el canvas. Para ejecutar el metodo debe dar click nuevamente sobre el mismo metodo que selecciono para utilizar.", "WELCOME");
         }
         private PointF getCenter()
         {
@@ -290,7 +292,7 @@ namespace Task2U2_AllAlgorithms
                     e.Graphics.DrawPolygon(localPen, points);
                 }
             }
-            if (linePoints.Count % 2 == 0 || (dictionaryAlgorithms["cohen_sutherland_enable"] == true && linePoints.Count % 2 == 0))
+            if (linePoints.Count % 2 == 0 && (dictionaryAlgorithms["cohen_sutherland_enable"] == true || dictionaryAlgorithms["bresenham_lines_enabled"] == true || dictionaryAlgorithms["dda_enabled"] == true))
             {
                 for (int i = 0; i < linePoints.Count; i += 2)
                 {
@@ -303,13 +305,21 @@ namespace Task2U2_AllAlgorithms
                 e.Graphics.DrawPolygon(pen, linePoints.ToArray());
             }
 
-            if (clippedPoints != null && clippedPoints.Length > 2)
+            if (clippedPoints != null && clippedPoints.Length >= 2)
             {
-                for (int i = 0; i < clippedPoints.Length; i += 2)
+                if(dictionaryAlgorithms["cohen_sutherland_enable"] == true)
                 {
-                    e.Graphics.DrawEllipse(new Pen(Color.Blue, 2), clippedPoints[i].X, clippedPoints[i].Y, 2, 2);
-                    e.Graphics.DrawEllipse(new Pen(Color.Orange, 2), clippedPoints[i + 1].X, clippedPoints[i + 1].Y, 2, 2);
-                    e.Graphics.DrawLine(new Pen(Color.Red), clippedPoints[i], clippedPoints[i + 1]);
+                    for (int i = 0; i < clippedPoints.Length; i += 2)
+                    {
+                        e.Graphics.DrawLine(new Pen(Color.Red, 2), clippedPoints[i], clippedPoints[i + 1]);
+                    }
+                }
+                else
+                {
+                    for (int i = 1; i < clippedPoints.Length; i++)
+                    {
+                        e.Graphics.DrawLine(new Pen(Color.Red, 2), clippedPoints[i - 1], clippedPoints[i]);
+                    }
                 }
             }
 
@@ -319,12 +329,12 @@ namespace Task2U2_AllAlgorithms
                 {
                     e.Graphics.DrawEllipse(new Pen(Color.Blue, 2), curvePoints[i].X, curvePoints[i].Y, 2, 2);
                     e.Graphics.DrawEllipse(new Pen(Color.Orange, 2), curvePoints[i + 1].X, curvePoints[i + 1].Y, 2, 2);
-                    e.Graphics.DrawLine(new Pen(Color.Red), curvePoints[i], curvePoints[i + 1]);
+                    e.Graphics.DrawLine(new Pen(Color.Red, 2), curvePoints[i], curvePoints[i + 1]);
                 }
             }
         }
 
-        private void ResetState(bool clearPolygon = true, bool clearPolygonFill = true, bool clearLines = true, bool clearVisited = true, bool clearAnimator = true, bool clearCanvas = true, bool clearDDA = true, bool clearBresenham = true)
+        private void ResetState(bool clearPolygon = true, bool clearPolygonFill = true, bool clearLines = true, bool clearVisited = true, bool clearAnimator = true, bool clearCanvas = true, bool clearDDA = true, bool clearBresenham = true, bool clearClippedPoints = true)
         {
             if (clearLines) linePoints.Clear();
             if (clearPolygon) polygon = null;
@@ -341,6 +351,7 @@ namespace Task2U2_AllAlgorithms
                 picCanvas.Invalidate();
             }
             if (clearDDA) dda_points.Clear();
+            if (clearClippedPoints) clippedPoints = null;
             if (clearBresenham) bresenham_points.Clear();
             trbRadious.Visible = false;
             trbRadious.Enabled = false;
@@ -516,6 +527,7 @@ namespace Task2U2_AllAlgorithms
             }
             else if (dictionaryAlgorithms["sutherland_hodgman_enable"] == true)
             {
+                if(linePoints.Count == 0) { return;  }
                 linePoints.Add(linePoints[0]);
                 clippedPoints = Sutherland_Hodgman_Algorithm.clippingSutherlandHodgmanAlgorithm(linePoints, canvasPoints.ToArray());
                 linePoints.Clear();

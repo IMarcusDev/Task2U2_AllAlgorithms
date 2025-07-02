@@ -77,6 +77,8 @@ namespace Task2U2_AllAlgorithms.src.components.clipping
                 }
             }
 
+            clipedPoints.Add(clipedPoints[0]);
+
             return clipedPoints.ToArray();
         }
 
