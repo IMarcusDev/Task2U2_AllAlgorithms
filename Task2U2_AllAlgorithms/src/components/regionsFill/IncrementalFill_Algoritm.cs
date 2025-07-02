@@ -9,14 +9,13 @@ namespace Task2U2_AllAlgorithms.src.components.regionsFill
 {
     internal class IncrementalFill_Algoritm
     {
-        public static Point[] ScanlineFill(Bitmap bmp, int startX, int startY, Color fillColor)
+        public static void ScanlineFill(Bitmap bmp, int startX, int startY, Color fillColor)
         {
             Color targetColor = bmp.GetPixel(startX, startY);
             if (targetColor.ToArgb() == fillColor.ToArgb())
-                return new Point[0];
+                return;
 
             Stack<Point> stack = new Stack<Point>();
-            List<Point> result = new List<Point>();
             HashSet<Point> visited = new HashSet<Point>();
 
             stack.Push(new Point(startX, startY));
@@ -27,30 +26,25 @@ namespace Task2U2_AllAlgorithms.src.components.regionsFill
                 int x = seed.X;
                 int y = seed.Y;
 
-                // Buscar límite izquierdo correctamente
                 int leftX = x;
                 while (leftX >= 0 && bmp.GetPixel(leftX, y).ToArgb() == targetColor.ToArgb())
                     leftX--;
-                leftX++; // Retrocede al último válido
+                leftX++;
 
-                // Buscar límite derecho correctamente
                 int rightX = x;
                 while (rightX < bmp.Width && bmp.GetPixel(rightX, y).ToArgb() == targetColor.ToArgb())
                     rightX++;
-                rightX--; // Retrocede al último válido
+                rightX--;
 
-                // Rellenar la línea horizontal desde leftX hasta rightX
                 for (int i = leftX; i <= rightX; i++)
                 {
                     Point p = new Point(i, y);
                     if (!visited.Contains(p))
                     {
                         bmp.SetPixel(i, y, fillColor);
-                        result.Add(p);
                         visited.Add(p);
                     }
 
-                    // Revisar píxel arriba
                     if (y > 0)
                     {
                         Point above = new Point(i, y - 1);
@@ -67,8 +61,6 @@ namespace Task2U2_AllAlgorithms.src.components.regionsFill
                     }
                 }
             }
-
-            return result.ToArray();
         }
     }
 }

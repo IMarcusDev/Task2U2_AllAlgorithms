@@ -62,7 +62,22 @@ namespace Task2U2_AllAlgorithms
             dictionaryAlgorithms.Add("beizer_enable", false);
             dictionaryAlgorithms.Add("bSplines_enabled", false);
 
-            MessageBox.Show("Bienvenidos al programa de graficación de algortimos gráficos. \n 🤖 Para utilizar el programa debe dar click en cada categoría que le dara acceso a las subcategorías \n 🤯 Luego debe seleccionar cualquiera de los metodos que desea y dependiendo del algoritmo puede colocar manualmente los puntos en el canvas sino tendra a su disposición slideBars para generar dianamicamente. \n Para el caso de los metodos donde coloca manualmente los puntos dando click sobre el canvas. Para ejecutar el metodo debe dar click nuevamente sobre el mismo metodo que selecciono para utilizar.", "WELCOME");
+            MessageBox.Show(
+                "¡Bienvenido al programa de visualización de algoritmos gráficos!\n\n" +
+                "¿Cómo usar la aplicación?\n" +
+                "• Haz clic en una categoría del menú lateral para ver sus subcategorías.\n" +
+                "• Selecciona un algoritmo de la lista disponible.\n" +
+                "• Para algoritmos que requieren puntos manuales:\n" +
+                "    - Haz clic sobre el área de dibujo (canvas) para colocar los puntos necesarios.\n" +
+                "    - Cuando termines, haz clic nuevamente en el botón del algoritmo para ejecutarlo.\n" +
+                "• Para algoritmos con parámetros dinámicos:\n" +
+                "    - Utiliza los controles deslizantes (sliders) para ajustar la forma o el tamaño según lo necesites.\n" +
+                "• El algoritmo seleccionado se mostrará en la parte superior de la ventana.\n\n" +
+                "Consejo: Puedes reiniciar o cambiar de algoritmo en cualquier momento seleccionando otro método.\n\n",
+                "Bienvenido",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
         }
         private PointF getCenter()
         {
@@ -78,6 +93,42 @@ namespace Task2U2_AllAlgorithms
         {
             dictionaryAlgorithms = dictionaryAlgorithms.ToDictionary(p => p.Key, p => false);
             dictionaryAlgorithms[algorithm] = value;
+
+            switch (algorithm) 
+            {
+                case "dda_enabled":
+                    lbl_TitleAlgorithm.Text = "DDA Algorithm";
+                    break;
+                case "bresenham_lines_enabled":
+                    lbl_TitleAlgorithm.Text = "Bresenham Line Algorithm";
+                    break;
+                case "bresenham_circunference_enabled":
+                    lbl_TitleAlgorithm.Text = "Bresenham Circunference Algorithm";
+                    break;
+                case "bresenham_ellipse_enabled":
+                    lbl_TitleAlgorithm.Text = "Bresenham Ellipse Algorithm";
+                    break;
+                case "floodFill_enable":
+                    lbl_TitleAlgorithm.Text = "Flood Fill Algorithm";
+                    break;
+                case "incrementalFill_enabled":
+                    lbl_TitleAlgorithm.Text = "Scanline Algorithm";
+                    break;
+                case "cohen_sutherland_enable":
+                    lbl_TitleAlgorithm.Text = "Cohen-Sutherland Algorithm";
+                    break;
+                case "sutherland_hodgman_enable":
+                    lbl_TitleAlgorithm.Text = "Sutherland-Hodgman Algorithm";
+                    break;
+                case "beizer_enable":
+                    lbl_TitleAlgorithm.Text = "Bézier Algorithm";
+                    break;
+                case "bSplines_enabled":
+                    lbl_TitleAlgorithm.Text = "BSpline Algorithm";
+                    break;
+                default:
+                    break;
+            }
         }
         private void picCanvas_SizeChanged(object sender, EventArgs e)
         {
@@ -625,19 +676,16 @@ namespace Task2U2_AllAlgorithms
             seed.X = (int)getCenter().X;
             seed.Y = (int)getCenter().Y;
 
-            Point[] filledPixels = new Point[0];
             if (polygonFill.GetNumLados() <= 4 && polygonFill.GetMagnitud() <= 49)
             {
-                filledPixels = FloodFill_Algorithm.Recursive_Flood_Fill(picCanvasCopy, seed.X, seed.Y, Color.Blue);
+                FloodFill_Algorithm.Recursive_Flood_Fill(picCanvasCopy, seed.X, seed.Y, Color.Blue);
             }
             else if (polygonFill.GetNumLados() > 4 || polygonFill.GetMagnitud() > 49) 
             {
-                filledPixels = FloodFill_Algorithm.Iterative_Parallel_Flood_Fill(picCanvasCopy, seed.X, seed.Y, Color.Blue);
+                FloodFill_Algorithm.Iterative_Parallel_Flood_Fill(picCanvasCopy, seed.X, seed.Y, Color.Blue);
             }
 
-            animator.ClearFrames();
-            animator.EnsureFramesFill(filledPixels.Length, filledPixels);
-            animator.Play(5);
+            picCanvas.Invalidate();
         }
 
         private void drawPolygonFill_ScanFillAlgorithm()
@@ -656,12 +704,9 @@ namespace Task2U2_AllAlgorithms
             seed.X = (int)getCenter().X;
             seed.Y = (int)getCenter().Y;
 
-            Point[] filledPixels = new Point[0];
-            filledPixels = IncrementalFill_Algoritm.ScanlineFill(picCanvasCopy, seed.X, seed.Y, Color.Blue);
+            IncrementalFill_Algoritm.ScanlineFill(picCanvasCopy, seed.X, seed.Y, Color.Blue);
 
-            animator.ClearFrames();
-            animator.EnsureFramesFill(filledPixels.Length, filledPixels);
-            animator.Play(5);
+            picCanvas.Invalidate();
         }
 
         private void trbRadious_ValueChanged(object sender, EventArgs e)

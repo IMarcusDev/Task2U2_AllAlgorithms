@@ -10,22 +10,20 @@ namespace Task2U2_AllAlgorithms.src.components.regionsFill
 {
     internal class FloodFill_Algorithm
     {
-        public static Point[] Recursive_Flood_Fill(Bitmap canvas, int x, int y, Color fillColor)
+        public static void Recursive_Flood_Fill(Bitmap canvas, int x, int y, Color fillColor, int maxDepth = 10000)
         {
             Color targetColor = canvas.GetPixel(x, y);
             if (targetColor.ToArgb() == fillColor.ToArgb())
-                return new Point[0];
+                return;
 
             HashSet<Point> visited = new HashSet<Point>();
-            List<Point> result = new List<Point>();
-
-            RecursiveFill(canvas, x, y, targetColor, fillColor, visited, result);
-
-            return result.ToArray();
+            RecursiveFill(canvas, x, y, targetColor, fillColor, visited, 0, maxDepth);
         }
 
-        private static void RecursiveFill(Bitmap canvas, int x, int y, Color targetColor, Color fillColor, HashSet<Point> visited, List<Point> result)
+        private static void RecursiveFill(Bitmap canvas, int x, int y, Color targetColor, Color fillColor, HashSet<Point> visited, int depth, int maxDepth)
         {
+            if (depth > maxDepth)
+                return;
             if (x < 0 || y < 0 || x >= canvas.Width || y >= canvas.Height)
                 return;
 
@@ -37,16 +35,15 @@ namespace Task2U2_AllAlgorithms.src.components.regionsFill
                 return;
 
             canvas.SetPixel(x, y, fillColor);
-            result.Add(p);
             visited.Add(p);
 
-            RecursiveFill(canvas, x, y + 1, targetColor, fillColor, visited, result);
-            RecursiveFill(canvas, x + 1, y, targetColor, fillColor, visited, result);
-            RecursiveFill(canvas, x, y - 1, targetColor, fillColor, visited, result);
-            RecursiveFill(canvas, x - 1, y, targetColor, fillColor, visited, result);
+            RecursiveFill(canvas, x, y + 1, targetColor, fillColor, visited, depth + 1, maxDepth);
+            RecursiveFill(canvas, x + 1, y, targetColor, fillColor, visited, depth + 1, maxDepth);
+            RecursiveFill(canvas, x, y - 1, targetColor, fillColor, visited, depth + 1, maxDepth);
+            RecursiveFill(canvas, x - 1, y, targetColor, fillColor, visited, depth + 1, maxDepth);
         }
-    
-        public static Point[] Iterative_Parallel_Flood_Fill(Bitmap canvas, int x, int y, Color color)
+
+        public static void Iterative_Parallel_Flood_Fill(Bitmap canvas, int x, int y, Color color)
         {
             int width = canvas.Width;
             int height = canvas.Height;
@@ -56,67 +53,55 @@ namespace Task2U2_AllAlgorithms.src.components.regionsFill
                 targetColor = canvas.GetPixel(x, y);
             }
             if (targetColor.ToArgb() == color.ToArgb())
-                return new Point[0];
+                return;
 
-            var points = new ConcurrentBag<Point>();
-            var queue = new ConcurrentQueue<Point>();
-            var visited = new ConcurrentDictionary<Point, byte>();
+            var queue = new Queue<Point>();
+            var visited = new HashSet<Point>();
 
             queue.Enqueue(new Point(x, y));
-            visited.TryAdd(new Point(x, y), 0);
+            visited.Add(new Point(x, y));
 
             object bmpLock = new object();
 
-            while (!queue.IsEmpty)
+            while (queue.Count > 0)
             {
-                var batch = new List<Point>();
-                Point p;
-                while (batch.Count < Environment.ProcessorCount * 8 && queue.TryDequeue(out p))
+                Point point = queue.Dequeue();
+                int px = point.X;
+                int py = point.Y;
+
+                if (px < 0 || py < 0 || px >= width || py >= height)
+                    continue;
+
+                Color currentColor;
+                lock (bmpLock)
                 {
-                    batch.Add(p);
+                    currentColor = canvas.GetPixel(px, py);
+                }
+                if (currentColor.ToArgb() != targetColor.ToArgb())
+                    continue;
+
+                lock (bmpLock)
+                {
+                    canvas.SetPixel(px, py, color);
                 }
 
-                Parallel.ForEach(batch, point =>
+                foreach (var neighbor in new[] {
+                    new Point(px, py - 1),
+                    new Point(px + 1, py),
+                    new Point(px, py + 1),
+                    new Point(px - 1, py)
+                })
                 {
-                    int px = point.X;
-                    int py = point.Y;
-
-                    if (px < 0 || py < 0 || px >= width || py >= height)
-                        return;
-
-                    Color currentColor;
-                    lock (bmpLock)
+                    if (neighbor.X >= 0 && neighbor.Y >= 0 && neighbor.X < width && neighbor.Y < height)
                     {
-                        currentColor = canvas.GetPixel(px, py);
-                    }
-                    if (currentColor.ToArgb() != targetColor.ToArgb())
-                        return;
-
-                    lock (bmpLock)
-                    {
-                        canvas.SetPixel(px, py, color);
-                    }
-                    points.Add(point);
-
-                    foreach (var neighbor in new[] {
-                        new Point(px, py - 1),
-                        new Point(px + 1, py),
-                        new Point(px, py + 1),
-                        new Point(px - 1, py)
-                    })
-                    {
-                        if (neighbor.X >= 0 && neighbor.Y >= 0 && neighbor.X < width && neighbor.Y < height)
+                        if (!visited.Contains(neighbor))
                         {
-                            if (visited.TryAdd(neighbor, 0))
-                            {
-                                queue.Enqueue(neighbor);
-                            }
+                            visited.Add(neighbor);
+                            queue.Enqueue(neighbor);
                         }
                     }
-                });
+                }
             }
-
-            return points.ToArray();
         }
     }
 }

@@ -22,7 +22,6 @@ namespace Task2U2_AllAlgorithms.src.components
             int px = 0;
             int py = twoRx2 * y;
 
-            // Región 1
             int p1 = (int)(ry2 - (rx2 * ry) + 0.25 * rx2);
             while (px < py)
             {
@@ -43,7 +42,6 @@ namespace Task2U2_AllAlgorithms.src.components
                 }
             }
 
-            // Región 2
             int p2 = (int)(ry2 * (x + 0.5f) * (x + 0.5f) + rx2 * (y - 1) * (y - 1) - rx2 * ry2);
             while (y >= 0)
             {

@@ -75,6 +75,7 @@
             this.picCanvas = new System.Windows.Forms.PictureBox();
             this.trbRadious = new ReaLTaiizor.Controls.PoisonTrackBar();
             this.trbNumLados = new System.Windows.Forms.TrackBar();
+            this.lbl_TitleAlgorithm = new ReaLTaiizor.Controls.MetroLabel();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnHamburger)).BeginInit();
             this.sideBarContainer.SuspendLayout();
@@ -103,6 +104,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.panel1.Controls.Add(this.lbl_TitleAlgorithm);
             this.panel1.Controls.Add(this.bigLabel1);
             this.panel1.Controls.Add(this.nightControlBox1);
             this.panel1.Controls.Add(this.btnHamburger);
@@ -618,7 +620,7 @@
             // 
             this.trbRadious.BackColor = System.Drawing.Color.Transparent;
             this.trbRadious.Enabled = false;
-            this.trbRadious.Location = new System.Drawing.Point(503, 123);
+            this.trbRadious.Location = new System.Drawing.Point(527, 126);
             this.trbRadious.Minimum = 10;
             this.trbRadious.Name = "trbRadious";
             this.trbRadious.Size = new System.Drawing.Size(665, 38);
@@ -631,7 +633,7 @@
             // trbNumLados
             // 
             this.trbNumLados.Enabled = false;
-            this.trbNumLados.Location = new System.Drawing.Point(362, 170);
+            this.trbNumLados.Location = new System.Drawing.Point(365, 252);
             this.trbNumLados.Minimum = 3;
             this.trbNumLados.Name = "trbNumLados";
             this.trbNumLados.Orientation = System.Windows.Forms.Orientation.Vertical;
@@ -640,6 +642,20 @@
             this.trbNumLados.Value = 3;
             this.trbNumLados.Visible = false;
             this.trbNumLados.ValueChanged += new System.EventHandler(this.trbNumLados_ValueChanged);
+            // 
+            // lbl_TitleAlgorithm
+            // 
+            this.lbl_TitleAlgorithm.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_TitleAlgorithm.IsDerivedStyle = true;
+            this.lbl_TitleAlgorithm.Location = new System.Drawing.Point(592, 21);
+            this.lbl_TitleAlgorithm.Name = "lbl_TitleAlgorithm";
+            this.lbl_TitleAlgorithm.Size = new System.Drawing.Size(506, 58);
+            this.lbl_TitleAlgorithm.Style = ReaLTaiizor.Enum.Metro.Style.Light;
+            this.lbl_TitleAlgorithm.StyleManager = null;
+            this.lbl_TitleAlgorithm.TabIndex = 4;
+            this.lbl_TitleAlgorithm.Text = "...";
+            this.lbl_TitleAlgorithm.ThemeAuthor = "Taiizor";
+            this.lbl_TitleAlgorithm.ThemeName = "MetroLight";
             // 
             // Main
             // 
@@ -731,6 +747,7 @@
         private ReaLTaiizor.Controls.BigLabel bigLabel1;
         private ReaLTaiizor.Controls.PoisonTrackBar trbRadious;
         private System.Windows.Forms.TrackBar trbNumLados;
+        private ReaLTaiizor.Controls.MetroLabel lbl_TitleAlgorithm;
     }
 }
 
